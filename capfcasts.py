@@ -43,3 +43,4 @@ for fcast in fcasts:
 iofuns.printfcasts('Low', flows)
 iofuns.printfcasts('High', fhighs)
 iofuns.writefcasts('Low', flows)
+iofuns.writefcasts('High', fhighs)
