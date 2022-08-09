@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime
 
 def printfcasts(fcasttype, fcasts):
     for fcast in fcasts:
@@ -7,7 +8,7 @@ def printfcasts(fcasttype, fcasts):
 
 
 def writefcasts(fcasttype, fcasts):
-    f = open('fcasts.csv', 'a')
+    f = open('/home/johnnie/Projects/wxstat/fcasts.csv', 'a')
     writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_ALL)
     for fcast in fcasts:
         row = []
@@ -19,12 +20,12 @@ def writefcasts(fcasttype, fcasts):
             row.append(fcasttype)
             row.append(fcast[1])
             writer.writerow(row)
-    print('Write complete')
+    print(datetime.now(), ': Write complete - fcasts')
     f.close()
 
 def writeactuals(actuals):
-    f = open('actuals.csv', 'a')
+    f = open('/home/johnnie/Projects/wxstat/actuals.csv', 'a')
     writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_ALL)
     writer.writerow(actuals)
-    print('Write complete')
+    print(datetime.now(), ': Write complete - actuals')
     f.close()
