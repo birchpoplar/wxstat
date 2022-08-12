@@ -1,4 +1,5 @@
 import csv
+import socket
 from datetime import datetime
 
 def printfcasts(fcasttype, fcasts):
@@ -8,7 +9,13 @@ def printfcasts(fcasttype, fcasts):
 
 
 def writefcasts(fcasttype, fcasts):
-    f = open('/home/johnnie/wxstat/fcasts.csv', 'a')
+    # Comment/uncomment line depending on system
+    # for sparta
+    # f = open('/home/johnnie/wxstat/fcasts.csv', 'a')
+    # for local
+    
+    f = open('fcasts.csv', 'a')
+    print(socket.gethostname())
     writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_ALL)
     for fcast in fcasts:
         row = []
