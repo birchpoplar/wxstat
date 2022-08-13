@@ -9,19 +9,20 @@ def printfcasts(fcasttype, fcasts):
 
 
 def writefcasts(fcasttype, fcasts):
-    # Comment/uncomment line depending on system
-    # for sparta
-    # f = open('/home/johnnie/wxstat/fcasts.csv', 'a')
-    # for local
-    
-    f = open('fcasts.csv', 'a')
-    print(socket.gethostname())
+
+    # need to determine if running on server (assume cronjob)
+    if socket.gethostname() == "sparta":
+        f = open('/home/johnnie/wxstat/fcasts.csv', 'a')
+    else:    
+        f = open('fcasts.csv', 'a')
+
     writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_ALL)
     for fcast in fcasts:
         row = []
         if type(fcast) != tuple:
             origin_date = fcast
         else:
+            row.append(datetime.now())
             row.append(fcast[0].strftime('%Y-%m-%d'))
             row.append(origin_date.strftime('%Y-%m-%d'))
             row.append(fcasttype)
@@ -31,8 +32,18 @@ def writefcasts(fcasttype, fcasts):
     f.close()
 
 def writeactuals(actuals):
-    f = open('/home/johnnie/wxstat/actuals.csv', 'a')
+    row = []
+    row.append(datetime.now())
+    for actual in actuals:
+        row.append(actual)
+
+    # need to determine if running on server (assume cronjob)
+    if socket.gethostname() == "sparta":
+        f = open('/home/johnnie/wxstat/actuals.csv', 'a')
+    else:    
+        f = open('actuals.csv', 'a')
+
     writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_ALL)
-    writer.writerow(actuals)
+    writer.writerow(row)
     print(datetime.now(), ': Write complete - actuals')
     f.close()
