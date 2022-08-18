@@ -14,7 +14,13 @@ fcasts = []
 # open actuals file and store highs and lows in separate dicts
 # with date as key for each
 
-with open('actuals.csv') as csv_file:
+
+if socket.gethostname() == "sparta":
+    f_act = '/home/johnnie/wxstat/actuals.csv'
+else:    
+    f_act = 'actuals.csv'
+
+with open(f_act) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     for row in csv_reader:
         actuals_high[datetime.datetime.strptime(row[1], "%Y-%m-%d")] = row[2]
@@ -22,7 +28,12 @@ with open('actuals.csv') as csv_file:
 
 # open fcasts CSV and store rows in list of lists fcasts
         
-with open('fcasts.csv') as csv_file:
+if socket.gethostname() == "sparta":
+    f_fct = '/home/johnnie/wxstat/fcasts.csv'
+else:    
+    f_fct = 'fcasts.csv'
+
+with open(f_fct) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     for row in csv_reader:
         fcast.append(datetime.datetime.strptime(row[1],"%Y-%m-%d"))
