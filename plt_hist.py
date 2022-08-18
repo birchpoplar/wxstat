@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import csv
 import datetime
+import socket
 
 # read actuals into a dict (round the temp to zero decimal digits)
  
