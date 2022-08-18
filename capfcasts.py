@@ -1,46 +1,43 @@
 import requests
-import csv
+# import csv
 import re
 import datetime
+from datetime import datetime as dtm
 from datetime import date
 from bs4 import BeautifulSoup
 import iofuns
+import datatypes as dt
 
 url = 'https://forecast.weather.gov/MapClick.php?CityName=Saratoga+Springs&state=NY&site=ALY&textField1=43.0676&textField2=-73.7788&e=0'
-# url = 'https://en.wikipedia.org/wiki/History_of_Python'
-
 page = requests.get(url).content
 soup = BeautifulSoup(page, "html.parser")
 
-flows = []
-fhighs = []
-alow = []
-ahigh = []
-flows.append(date.today())
-fhighs.append(date.today())
+fcasts = []
+fcasts_raw = soup.find_all("div", class_="tombstone-container")
+firstFcast = True
 
-fcasts = soup.find_all("div", class_="tombstone-container")
-
-firstFcast = True;
-
-for fcast in fcasts:
-    if isinstance(fcast.find("p", class_="temp temp-high"), type(None)):
-        temp = fcast.find("p", class_="temp temp-low")
-        if firstFcast == True:
+for fcast_raw in fcasts_raw:
+    if isinstance(fcast_raw.find("p", class_="temp temp-high"), type(None)):
+        temp = fcast_raw.find("p", class_="temp temp-low")
+        if firstFcast is True:
             fcastdate = date.today() + datetime.timedelta(days=1)
         nextIsSameDay = True
-        flows.append((fcastdate, (re.search('[0-9][0-9]', temp.text).group())))
+        fcasts.append(dt.Fcast(dtm.now(), fcastdate, date.today(), "Low",
+                               (re.search('[0-9][0-9]', temp.text).group())))
     else:
-        temp = fcast.find("p", class_="temp temp-high")
-        if firstFcast == True:
+        temp = fcast_raw.find("p", class_="temp temp-high")
+        if firstFcast is True:
             fcastdate = date.today()
-        nextIsSameDay = False            
-        fhighs.append((fcastdate, (re.search('[0-9][0-9]', temp.text).group())))
-    if nextIsSameDay == False:
+        nextIsSameDay = False
+        fcasts.append(dt.Fcast(dtm.now(), fcastdate, date.today(), "High",
+                               (re.search('[0-9][0-9]', temp.text).group())))
+
+    if nextIsSameDay is False:
         fcastdate += datetime.timedelta(days=1)
     firstFcast = False
 
-iofuns.printfcasts('Low', flows)
-iofuns.printfcasts('High', fhighs)
-iofuns.writefcasts('Low', flows)
-iofuns.writefcasts('High', fhighs)
+iofuns.printfcasts(fcasts)
+# iofuns.printfcasts('Low', flows)
+# iofuns.printfcasts('High', fhighs)
+# iofuns.writefcasts('Low', flows)
+# iofuns.writefcasts('High', fhighs)

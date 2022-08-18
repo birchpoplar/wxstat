@@ -1,11 +1,20 @@
 import csv
 import socket
 from datetime import datetime
+import datatypes
 
-def printfcasts(fcasttype, fcasts):
+
+def printfcasts(fcasts):
     for fcast in fcasts:
-        if type(fcast) == tuple:
-            print(fcasttype + " :: " + str(fcast[0]) + " :: " + fcast[1])
+        if fcast.bound == "High":
+            print(fcast.fcast_date, ' : High : ', fcast.temp)
+    for fcast in fcasts:
+        if fcast.bound == "Low":
+            print(fcast.fcast_date, ' : Low : ', fcast.temp)
+
+            
+#        if type(fcast) == tuple:
+#            print(fcasttype + " :: " + str(fcast[0]) + " :: " + fcast[1])
 
 
 def writefcasts(fcasttype, fcasts):
@@ -31,11 +40,12 @@ def writefcasts(fcasttype, fcasts):
     print(datetime.now(), ': Write complete - fcasts')
     f.close()
 
-def writeactuals(actuals):
+
+def writeactuals(actual):
     row = []
     row.append(datetime.now())
-    for actual in actuals:
-        row.append(actual)
+    for item in actual.mk_data_str():
+        row.append(item)
 
     # need to determine if running on server (assume cronjob)
     if socket.gethostname() == "sparta":

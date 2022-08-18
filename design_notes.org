@@ -1,0 +1,34 @@
+#+TITLE: Design Notes for WxStat
+#+AUTHOR: Johnnie Walker
+
+
+Histogram per day prior (relative) to actual day. - histogram is aggregate on error in F
+
+How to compile histogram?
+
+Compute difference in days from origin date to forecast date
+Compute difference in F
+increment
+
+Create np.array for each day prior to actual (inc actual)
+append difference in F to each np.array
+
+#+begin_src python
+
+from matplotlib import pyplot as plt
+import numpy as np
+
+# Creating dataset
+a = np.array([22, 87, 5, 43, 56,
+			73, 55, 54, 11,
+			20, 51, 5, 79, 31,
+			27])
+
+# Creating histogram
+fig, ax = plt.subplots(figsize =(10, 7))
+ax.hist(a, bins = [0, 25, 50, 75, 100])
+
+# Show plot
+plt.show()
+
+#+end_src
