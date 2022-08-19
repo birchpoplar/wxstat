@@ -51,27 +51,36 @@ with open(f_fct) as csv_file:
 max_diff = 10
 data_high = []
 data_low = []
+data_out = []
 for i in range(max_diff):
     data_high.append([])
     data_low.append([])
 
-
+f = open('data_out.csv', 'w')
+writer = csv.writer(f, delimiter = ',', quoting=csv.QUOTE_ALL)
+    
 for row in fcasts:
     if row[2] == "High":
         if row[0] in actuals_high.keys():
+            data_out.append(row[0])
+            data_out.append(row[1])
+            data_out.append(row[3])
+            data_out.append('High')
+            data_out.append(actuals_high[row[0]])
+            writer.writerow(data_out)
             data_high[(row[0]-row[1]).days].append(round(float(row[3]) - \
                                                          float(actuals_high[row[0]]), 2))
     elif row[2] == "Low":
+            data_out.append(row[0])
+            data_out.append(row[1])
+            data_out.append(row[3])
+            data_out.append('Low')
+            data_out.append(actuals_low[row[0]])
+            writer.writerow(data_out)
         if row[0] in actuals_low.keys():
             data_low[(row[0]-row[1]).days].append(round(float(row[3]) -
                                                         float(actuals_low[row[0]]), 2))
-
-#for i in range(max_diff):
-#    print(i," : HIGH DIFFS : ", data_high[i])
-#    print(i," : LOW DIFFS : ", data_low[i])
-
-#print(data_high)
-#print(data_low)
+f.close()
     
 num_bins = 5
 mint = -15
