@@ -88,6 +88,7 @@ for idx, ax in enumerate(a):
 pyplot.xlim([mint,maxt])
 pyplot.tight_layout()
 pyplot.savefig('/home/johnnie/wxstat/hist_high.png')
+# pyplot.savefig('/home/johnnie/Projects/wxstat/hist_high.png')
 print('Saved High Histograms')
 
 f, a = pyplot.subplots(4, 1, sharex = True)
@@ -101,4 +102,5 @@ for idx, ax in enumerate(a):
 pyplot.xlim([mint,maxt])
 pyplot.tight_layout()
 pyplot.savefig('/home/johnnie/wxstat/hist_low.png')
+# pyplot.savefig('/home/johnnie/Projects/wxstat/hist_low.png')
 print('Saved Low Histograms')

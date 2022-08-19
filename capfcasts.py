@@ -37,7 +37,4 @@ for fcast_raw in fcasts_raw:
     firstFcast = False
 
 iofuns.printfcasts(fcasts)
-# iofuns.printfcasts('Low', flows)
-# iofuns.printfcasts('High', fhighs)
-# iofuns.writefcasts('Low', flows)
-# iofuns.writefcasts('High', fhighs)
+iofuns.writefcasts(fcasts)
