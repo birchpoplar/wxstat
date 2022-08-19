@@ -56,7 +56,11 @@ for i in range(max_diff):
     data_high.append([])
     data_low.append([])
 
-f = open('data_out.csv', 'w')
+if socket.gethostname() == "sparta":
+    f_do = '/home/johnnie/wxstat/fcasts.csv'
+else:    
+    f_do = 'fcasts.csv'
+f = open(f_do, 'w')
 writer = csv.writer(f, delimiter = ',', quoting=csv.QUOTE_ALL)
     
 for row in fcasts:
@@ -71,13 +75,13 @@ for row in fcasts:
             data_high[(row[0]-row[1]).days].append(round(float(row[3]) - \
                                                          float(actuals_high[row[0]]), 2))
     elif row[2] == "Low":
+        if row[0] in actuals_low.keys():
             data_out.append(row[0])
             data_out.append(row[1])
             data_out.append(row[3])
             data_out.append('Low')
             data_out.append(actuals_low[row[0]])
             writer.writerow(data_out)
-        if row[0] in actuals_low.keys():
             data_low[(row[0]-row[1]).days].append(round(float(row[3]) -
                                                         float(actuals_low[row[0]]), 2))
 f.close()
