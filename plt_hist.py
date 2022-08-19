@@ -57,12 +57,12 @@ for i in range(max_diff):
     data_low.append([])
 
 if socket.gethostname() == "sparta":
-    f_do = '/home/johnnie/wxstat/fcasts.csv'
+    f_do = '/home/johnnie/wxstat/data_out.csv'
 else:    
-    f_do = 'fcasts.csv'
-f = open(f_do, 'w')
-writer = csv.writer(f, delimiter = ',', quoting=csv.QUOTE_ALL)
-    
+    f_do = 'data_out.csv'
+f = open(f_do, 'w', newline='')
+writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_ALL)
+
 for row in fcasts:
     if row[2] == "High":
         if row[0] in actuals_high.keys():
