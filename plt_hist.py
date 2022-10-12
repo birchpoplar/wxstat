@@ -4,6 +4,7 @@ import pandas as pd
 import csv
 import datetime
 import socket
+import config
 
 # read actuals into a dict (round the temp to zero decimal digits)
  
@@ -15,12 +16,7 @@ fcasts = []
 # open actuals file and store highs and lows in separate dicts
 # with date as key for each
 
-
-if socket.gethostname() == "sparta":
-    f_act = '/home/johnnie/wxstat/actuals.csv'
-else:    
-    f_act = 'actuals.csv'
-
+f_act = config.CSVActuals
 with open(f_act) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     for row in csv_reader:
@@ -29,11 +25,7 @@ with open(f_act) as csv_file:
 
 # open fcasts CSV and store rows in list of lists fcasts
         
-if socket.gethostname() == "sparta":
-    f_fct = '/home/johnnie/wxstat/fcasts.csv'
-else:    
-    f_fct = 'fcasts.csv'
-
+f_fct = config.CSVFcasts
 with open(f_fct) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     for row in csv_reader:
@@ -56,10 +48,7 @@ for i in range(max_diff):
     data_high.append([])
     data_low.append([])
 
-if socket.gethostname() == "sparta":
-    f_do = '/home/johnnie/wxstat/data_out.csv'
-else:    
-    f_do = 'data_out.csv'
+f_do = config.CSVDataOut
 f = open(f_do, 'w', newline='')
 writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_ALL)
 
@@ -100,8 +89,7 @@ for idx, ax in enumerate(a):
 
 pyplot.xlim([mint,maxt])
 pyplot.tight_layout()
-pyplot.savefig('/home/johnnie/wxstat/hist_high.png')
-# pyplot.savefig('/home/johnnie/Projects/wxstat/hist_high.png')
+pyplot.savefig(config.PNGHistHigh)
 print('Saved High Histograms')
 
 f, a = pyplot.subplots(4, 1, sharex = True)
@@ -114,6 +102,5 @@ for idx, ax in enumerate(a):
 
 pyplot.xlim([mint,maxt])
 pyplot.tight_layout()
-pyplot.savefig('/home/johnnie/wxstat/hist_low.png')
-# pyplot.savefig('/home/johnnie/Projects/wxstat/hist_low.png')
+pyplot.savefig(config.PNGHistLow)
 print('Saved Low Histograms')

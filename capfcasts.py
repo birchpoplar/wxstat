@@ -7,8 +7,9 @@ from datetime import date
 from bs4 import BeautifulSoup
 import iofuns
 import datatypes as dt
+import config
 
-url = 'https://forecast.weather.gov/MapClick.php?CityName=Saratoga+Springs&state=NY&site=ALY&textField1=43.0676&textField2=-73.7788&e=0'
+url = config.NWSURL
 page = requests.get(url).content
 soup = BeautifulSoup(page, "html.parser")
 

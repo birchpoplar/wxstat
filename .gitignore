@@ -4,6 +4,10 @@ __pycache__
 # ignore the virtual environment
 venv
 
+# ignore config YAML
+*.yaml
+*.yml
+
 # ignore images and output files
 *.png
 *.jpg

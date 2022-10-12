@@ -5,8 +5,9 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 import iofuns
 import datatypes as dt
+import config
 
-url = 'http://sparta/weewx/'
+url = config.LocalURL 
 
 page = requests.get(url).content
 soup = BeautifulSoup(page, "html.parser")
